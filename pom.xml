@@ -68,9 +68,6 @@
             <resource>
                 <directory>src/main/resources</directory>
                 <targetPath>${project.build.directory}/classes</targetPath>
-                <includes>
-                    <include>**/log4j2.xml</include>
-                </includes>
             </resource>
         </resources>
     </build>

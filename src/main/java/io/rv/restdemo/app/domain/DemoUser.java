@@ -55,6 +55,19 @@ public final class DemoUser {
         return calculations;
     }
 
+    @Override
+    public String toString() {
+        return "DemoUser{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", avatarUrl=" + avatarUrl +
+                ", createdAt=" + createdAt +
+                ", calculations=" + calculations +
+                '}';
+    }
+
     public static final class Builder {
 
         private final int id;

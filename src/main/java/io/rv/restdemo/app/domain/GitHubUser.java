@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import org.springframework.core.style.ToStringCreator;
+import org.springframework.core.style.ToStringStyler;
 
 import java.net.URL;
 import java.time.ZonedDateTime;
@@ -68,6 +70,19 @@ public final class GitHubUser {
         return publicRepos;
     }
 
+    @Override
+    public String toString() {
+        return "GitHubUser{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", avatarURL=" + avatarURL +
+                ", createdAt=" + createdAt +
+                ", followersCount=" + followersCount +
+                ", publicRepos=" + publicRepos +
+                '}';
+    }
 
     @JsonPOJOBuilder
     public static final class Builder {

@@ -89,7 +89,7 @@ public final class DemoUser {
             return this;
         }
 
-        public Builder withCreateAt(final ZonedDateTime createdAt) {
+        public Builder withCreatedAt(final ZonedDateTime createdAt) {
             this.createdAt = createdAt;
             return this;
         }

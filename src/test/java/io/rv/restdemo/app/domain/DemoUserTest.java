@@ -29,7 +29,7 @@ public class DemoUserTest {
                 .withName(TEST_NAME)
                 .withType(TEST_TYPE)
                 .withAvatarUrl(TEST_AVATAR_URL)
-                .withCreateAt(TEST_CREATED_AT)
+                .withCreatedAt(TEST_CREATED_AT)
                 .withCalculations(TEST_CALCULATIONS)
                 .build();
 

@@ -11,8 +11,7 @@ public final class CalculationsHelper {
      * @return calculations result or <code>null</code> if the calculation is not possible
      */
     public Double calculateFrom(final int followers, final int publicRepos) {
-        //todo implement me
-        return null;
+        return followers == 0 ? null : 6.0d / followers * (2 + publicRepos);
     }
 
 }

@@ -1,5 +1,6 @@
 package io.rv.restdemo.app.rest;
 
+import io.rv.restdemo.app.db.APICallListener;
 import io.rv.restdemo.app.domain.CalculationsHelper;
 import io.rv.restdemo.app.domain.GitHubToDemoUserConverter;
 import io.rv.restdemo.app.domain.GitHubUser;
@@ -18,7 +19,7 @@ import java.nio.file.Paths;
 import java.time.ZonedDateTime;
 
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -33,6 +34,9 @@ public class UsersControllerTest {
     @MockBean
     private GitHubClient gitHubClient;
 
+    @MockBean
+    private APICallListener callListener;
+
     @SpyBean
     private CalculationsHelper calculationsHelper;
 
@@ -43,6 +47,14 @@ public class UsersControllerTest {
     public void shouldReturnNotFoundWhenUserWasNotReturnedByClient() throws Exception {
         mockMvc.perform(get("/users/user-that-does-not-exist"))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void shouldNotifyAPICallListenerOnClientCall() throws Exception {
+        mockMvc.perform(get("/users/some-user"))
+                .andExpect(status().isNotFound());
+
+        verify(callListener, times(1)).registerCallForLogin(eq("some-user"));
     }
 
     @Test
@@ -57,7 +69,7 @@ public class UsersControllerTest {
                         .withPublicRepos(8)
                         .build());
 
-        var resp = mockMvc.perform(get("/users/octocat"))
+        mockMvc.perform(get("/users/octocat"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(Files.readString(Paths.get(ClassLoader.getSystemResource("io/rv/restdemo/app/rest/demo-octocat-resp.json").toURI()))));
     }

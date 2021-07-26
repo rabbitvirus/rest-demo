@@ -1,5 +1,6 @@
 package io.rv.restdemo.app.rest;
 
+import io.rv.restdemo.app.db.APICallListener;
 import io.rv.restdemo.app.domain.DemoUser;
 import io.rv.restdemo.app.domain.GitHubToDemoUserConverter;
 import io.rv.restdemo.app.domain.GitHubUser;
@@ -22,16 +23,27 @@ public class UsersController {
 
     private final GitHubClient gitHubRestClient;
     private final GitHubToDemoUserConverter converter;
+    private final APICallListener callListener;
 
     @Autowired
     public UsersController(final GitHubClient gitHubRestClient,
-                           final GitHubToDemoUserConverter converter) {
+                           final GitHubToDemoUserConverter converter,
+                           final APICallListener callListener) {
         this.gitHubRestClient = gitHubRestClient;
         this.converter = converter;
+        this.callListener = callListener;
     }
 
     @GetMapping(value = "/{login}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<DemoUser> getLoginDetails(@PathVariable final String login) {
+        try {
+            return getDemoUserResponseEntity(login);
+        } finally {
+            callListener.registerCallForLogin(login);
+        }
+    }
+
+    private ResponseEntity<DemoUser> getDemoUserResponseEntity(final String login) {
         final GitHubUser ghUser = gitHubRestClient.getGitHubUser(login);
         if (ghUser == null) {
             LOGGER.info("User {} not found...", () -> login);

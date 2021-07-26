@@ -52,7 +52,7 @@ public class GitHubRestClient implements GitHubClient {
                 return restTemplate.getForObject(createURIForLogin(user), GitHubUser.class);
             });
         } catch (final Exception x) {
-            LOGGER.error("Could not obtain GitHub user data for: {user}", x);
+            LOGGER.error("Could not obtain GitHub user data for " + user, x);
         }
         return ghUser;
     }

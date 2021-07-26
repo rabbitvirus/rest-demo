@@ -9,4 +9,4 @@ The easiest way to start the app is to change directory to project's root and th
 For simple tests, once you start the application, you can use OpenAPI:
 [localhost:8080/swagger-ui.html](localhost:8080/swagger-ui.html)
 
-Also, H2 console is enable: [localhost:8080/h2](localhost:8080/h2) (*important: use `jdbc:h2:mem:maindb`*).
+Also, H2 console is enabled: [localhost:8080/h2](localhost:8080/h2) (*important: use `jdbc:h2:mem:maindb`*).
